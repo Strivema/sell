@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.146.135/sell?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  jackson:
+      default-property-inclusion: non_null
+server:
+  context-path: /sell
+
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"  # 这里只是规定控制台的输出格式，而输出到文件的日志格式还是默认的
+##  path: F:/
+#  file: F:/sell.log # 这里指定 输出日志文件的名字，也可以指定路径。那就不用path了，path就自动给你一个文件名
+#  level: debug
