@@ -6,11 +6,51 @@
 1.1、
 第一步是微信授权拿到openID，拿到openID以后我们才可以做后续的操作..
 所以获取openID是第一个关键点，有手工获取和SDK获取两种方式，手工获取只是加深印象，实际操作推荐用第三方SDK。
+***个人身份是不能申请微信支付的，必须要以企业的资质才可以申请，个人开发的话就去借个帐号。
+***开发文档里面，服务商版：可以理解为微信的代理商，代理商往往是提供技术，有可能提供更低的费用等。 我们主要看普通商户版
+***在公众账号里面支付，这种交易类型，我们称之为JSAPI。这个时候需要要传openID（用户标识）。
+
+1.2、第二个工具
+我们希望微信能访问我们自己的电脑，用的就是这个工具。 开发的时候授权回调，我们希望回调到我们自己的电脑上。
+双击natapp.exe，命令行输入：natapp.exe -authtoken=4b219037144385d8 即可启动。启动之后会讲购买的域名映射到 对应的ip：端口
 
 
 
+14、关于部署
+14.1、tomcat：
+        缺点：部署两个应用程序，需要使用两个不同的端口，这个需要在tomcat里面配置。
+        另外，我需要这个程序是可以区分多个环境的，tomcat里面也不好设置。
+    java -jar：
+        使用这个来启动的话，就能很方便的指定我们需要的参数。
+
+java -jar 打出来的包指定名称，<finalName>sell</finalName>
+
+把jar包放到 /opt/javaapps 这个路径下  scp 原jar包 新路径下
+
+启动的时候想改端口：
+java -jar -Dserver.port=8090 sell.jar
+
+多环境配置：
+开发的时候启动，希望把日志打印出来。
+生产环境启动，不把日志打印出来。
+
+开发的时候启动，默认是是开发环境的配置文件
+生产环境启动的时候，指定一下配置文件：java -jar -Dserver.port=8090 -Dspring.profile.active=prod sell.jar
+
+启动的时候  置于后台如何做：
+   nohup java -jar sell.jar > /dev/null 2>&1 &     ：这个时候会打印出进程号 形如：[1]  2830
+   ps -ef | grep sell.jar   就可以看到2830
+
+一般都是写一个shell脚本去发布：
+vi start.sh
+内容如下：
+#!/bin/sh
+nohup java -jar sell.jar > /dev/null 2>&1 &
+然后 bash start.sh即可。
 
 
-
-
-
+还有一个服务启动的方式：
+cd /etc/systemd/system
+vi sell.service
+内容如下：
+具体每行什么意思，看视频
