@@ -17,3 +17,7 @@ server:
 ##  path: F:/
 #  file: F:/sell.log # 这里指定 输出日志文件的名字，也可以指定路径。那就不用path了，path就自动给你一个文件名
 #  level: debug
+
+wechat:
+  myAppId: wx34177639cfd29045
+  myAppSecret: 952005dda5a3bbffdabcf62a3c0472b3

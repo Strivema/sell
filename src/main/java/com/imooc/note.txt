@@ -8,11 +8,28 @@
 所以获取openID是第一个关键点，有手工获取和SDK获取两种方式，手工获取只是加深印象，实际操作推荐用第三方SDK。
 ***开发文档里面，普通商户版：个人身份是不能申请微信支付的，必须要以企业的资质才可以申请，个人开发的话就去借个帐号。
 ***开发文档里面，服务商版：可以理解为微信的代理商，代理商往往是提供技术，有可能提供更低的费用等。 我们主要看普通商户版
-***在公众账号里面支付，这种交易类型，我们称之为JSAPI。这个时候需要要传openID（用户标识）。
+***在公众账号里面支付，这种交易类型，我们称之为JSAPI。这个时候需要要传openID（用户的唯一标识）。
 
 1.2、第二个工具
 我们希望微信能访问我们自己的电脑，用的就是这个工具。 开发的时候授权回调，我们希望回调到我们自己的电脑上。
-双击natapp.exe，命令行输入：natapp.exe -authtoken=4b219037144385d8 即可启动。启动之后会讲购买的域名映射到 对应的ip：端口
+双击natapp.exe，命令行输入：natapp.exe -authtoken=577214fcbdec912a 即可启动。启动之后会讲购买的域名映射到 对应的ip：端口
+
+1.3
+1、微信的用户授权，仅仅是通过openid拿到昵称，性别，所在地，头像。别的信息是拿不到的，可以放心点“确认登录”
+你的微信号，手机号，朋友圈信息都是拿不到的。
+2、新建一个WeixinController，因为要在这里接收信息，并且打印出来。
+wx451dfb20c6b8406d
+3、
+https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx34177639cfd29045&redirect_uri=http://sell-from-jll.natapp1.cc/sell/weixin/auth&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect
+4、
+用户同意授权后
+如果用户同意授权，页面将跳转至 redirect_uri/?code=CODE&state=STATE
+就是会跳转至 http://sell-from-jll.natapp1.cc/sell/weixin/auth?code=XXX(自己传的值)
+
+5、对1-4的小总结，其实做这么多事，就是为了拿到openID
+第一，设置域名（其实就是微信的白名单校验，这里介绍了一个内网穿透工具来调试，重点是把校验文件放到根目录下并传上去校验）
+第二，获取code、base和userinfo方式
+第三，换取access_token。  都做完之后才是拿到了openID。
 
 
 
