@@ -31,11 +31,12 @@ public class OrderMaster {
     private Date updateTime;
 
     /**
-     * 加了这个注解，去数据库里映射的时候就会忽略了。。因为数据库里没有这个字段
+     * 數據庫裏 OrderMaster本來就沒有OrderDetail。
+     * 所以可以加这个注解@Transient，去数据库里映射的时候就会忽略了。。因为数据库里没有这个字段
      *
      * 但是这么做，不是很好，因为这个类一方面对应数据库的字段，另一方面又要给外部的controller用，所以有点乱
      *
-     * 好的做法是重新写一个类。 写在dto包里。data transfer object 数据传输对象。专门放中间传输的数据。
+     * 好的做法是重新写一个类 OrderDTO 。 写在dto包里。data transfer object 数据传输对象。专门放中间传输的数据。
      *//*
     @Transient
     List<OrderDetail> orderDetailList;*/

@@ -16,7 +16,7 @@ public class KeyUtil {
      */
     public static synchronized String genUniqueKey(){
         Random random = new Random();
-        Integer number = random.nextInt(9000000) + 1000000;   //生成一个六位随机数
+        Integer number = random.nextInt(9000000) + 1000000;   //生成一个六位随机数（永遠都是固定的六位）
         return System.currentTimeMillis() + String.valueOf(number);
     }
 
