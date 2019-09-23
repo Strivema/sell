@@ -7,14 +7,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
-
-@SpringBootTest
+/**
+ * Created by 廖师兄
+ * 2017-05-07 14:37
+ */
 @RunWith(SpringRunner.class)
+@SpringBootTest
 public class ProductCategoryRepositoryTest {
 
     @Autowired
@@ -24,33 +27,31 @@ public class ProductCategoryRepositoryTest {
     public void findOneTest() {
         ProductCategory productCategory = repository.findOne(1);
         System.out.println(productCategory.toString());
-        Assert.assertNotNull(productCategory);
     }
 
     @Test
     @Transactional
-    /***
-     * 这个和service里的事务不一样，service里是抛异常就回滚。
-     * 但是在test里面是所有事情都回复。测试数据是不会加到数据库里面去的，测试用例执行完，数据库是干净的。
-     */
-    public void saveTest(){
-        //type在数据库里加了约束，必须是唯一的。   unique key `uqe_category_type` (`category_type`)
-        ProductCategory productCategory = new ProductCategory("测试最爱",5);
+    public void saveTest() {
+        ProductCategory productCategory = new ProductCategory("男生最爱", 4);
         ProductCategory result = repository.save(productCategory);
         Assert.assertNotNull(result);
-//        Assert.assertNotEquals(null,result);
+//        Assert.assertNotEquals(null, result);
     }
 
-    /***
-     * 用
-     * @throws Exception
-     */
     @Test
-    public void findAllByCategoryTypeIn() throws Exception {
-        List<Integer> typeList = Arrays.asList(1,2);
-        List<ProductCategory> result = repository.findAllByCategoryTypeIn(typeList);
-        Assert.assertEquals(1, result.size());
+    public void findByCategoryTypeInTest() {
+        List<Integer> list = Arrays.asList(2,3,4);
 
+        List<ProductCategory> result = repository.findByCategoryTypeIn(list);
+        Assert.assertNotEquals(0, result.size());
     }
 
+    @Test
+    public void updateTest() {
+//        ProductCategory productCategory = repository.findOne(4);
+//        productCategory.setCategoryName("男生最爱1");
+        ProductCategory productCategory = new ProductCategory("男生最爱", 4);
+        ProductCategory result = repository.save(productCategory);
+        Assert.assertEquals(productCategory, result);
+    }
 }

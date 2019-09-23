@@ -8,32 +8,34 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 类目
+ * Created by 廖师兄
+ * 2017-05-09 10:16
+ */
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private ProductCategoryRepository repository;
 
     @Override
     public ProductCategory findOne(Integer categoryId) {
-        ProductCategory productCategory = repository.findOne(categoryId);
-        return productCategory;
+        return repository.findOne(categoryId);
     }
 
     @Override
     public List<ProductCategory> findAll() {
-        List<ProductCategory> productCategoryList = repository.findAll();
-        return productCategoryList;
+        return repository.findAll();
     }
 
     @Override
     public List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList) {
-        return repository.findAllByCategoryTypeIn(categoryTypeList);
+        return repository.findByCategoryTypeIn(categoryTypeList);
     }
 
     @Override
     public ProductCategory save(ProductCategory productCategory) {
-        ProductCategory result= repository.save(productCategory);
-        return result;
+        return repository.save(productCategory);
     }
 }

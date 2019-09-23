@@ -4,17 +4,59 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
- * @Author JLL
- * @Date 2018/12/27/0027 下午 8:19
+ * Created by 廖师兄
+ * 2017-07-03 01:31
  */
 @Data
 @Component
 @ConfigurationProperties(prefix = "wechat")
 public class WechatAccountConfig {
 
-    private String myAppId;
+    /**
+     * 公众平台id
+     */
+    private String mpAppId;
 
-    private String myAppSecret;
+    /**
+     * 公众平台密钥
+     */
+    private String mpAppSecret;
 
+    /**
+     * 开放平台id
+     */
+    private String openAppId;
+
+    /**
+     * 开放平台密钥
+     */
+    private String openAppSecret;
+
+    /**
+     * 商户号
+     */
+    private String mchId;
+
+    /**
+     * 商户密钥
+     */
+    private String mchKey;
+
+    /**
+     * 商户证书路径
+     */
+    private String keyPath;
+
+    /**
+     * 微信支付异步通知地址
+     */
+    private String notifyUrl;
+
+    /**
+     * 微信模版id
+     */
+    private Map<String, String> templateId;
 }

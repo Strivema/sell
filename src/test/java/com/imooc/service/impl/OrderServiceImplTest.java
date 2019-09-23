@@ -17,7 +17,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+/**
+ * Created by 廖师兄
+ * 2017-06-11 19:54
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
@@ -25,28 +28,33 @@ public class OrderServiceImplTest {
 
     @Autowired
     private OrderServiceImpl orderService;
+
     private final String BUYER_OPENID = "1101110";
-    private final String ORDER_ID = "15231873616327807417";
+
+    private final String ORDER_ID = "1497183332311989948";
+
     @Test
     public void create() throws Exception {
+
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setBuyerName("廖师兄");
         orderDTO.setBuyerAddress("幕课网");
         orderDTO.setBuyerPhone("123456789012");
         orderDTO.setBuyerOpenid(BUYER_OPENID);
 
-        //购物车 ，也就是orderDetailList里的东西
+        //购物车
         List<OrderDetail> orderDetailList = new ArrayList<>();
-
         OrderDetail o1 = new OrderDetail();
-        o1.setProductId("123457");
-        o1.setProductQuantity(2);
+        o1.setProductId("1234568");
+        o1.setProductQuantity(1);
+
         OrderDetail o2 = new OrderDetail();
-        o2.setProductId("12345");
-        o2.setProductQuantity(3);
+        o2.setProductId("123457");
+        o2.setProductQuantity(2);
 
         orderDetailList.add(o1);
         orderDetailList.add(o2);
+
         orderDTO.setOrderDetailList(orderDetailList);
 
         OrderDTO result = orderService.create(orderDTO);
@@ -58,7 +66,7 @@ public class OrderServiceImplTest {
     public void findOne() throws Exception {
         OrderDTO result = orderService.findOne(ORDER_ID);
         log.info("【查询单个订单】result={}", result);
-        Assert.assertEquals(ORDER_ID,result.getOrderId());
+        Assert.assertEquals(ORDER_ID, result.getOrderId());
     }
 
     @Test
@@ -68,34 +76,33 @@ public class OrderServiceImplTest {
         Assert.assertNotEquals(0, orderDTOPage.getTotalElements());
     }
 
-    /**
-     * @throws Exception
-     */
     @Test
     public void cancel() throws Exception {
-        //取消订单，要更新一条记录的时候，首先要判断下该记录的状态。只有指定的状态下，订单才能被取消。
-        //如果订单已经是完结状态，那就不能被取消。
-        OrderDTO orderDTO  = orderService.findOne(ORDER_ID);
-        OrderDTO cancelResult  = orderService.cancel(orderDTO);
-
-        Assert.assertEquals(cancelResult.getOrderStatus(), OrderStatusEnum.CANCEL.getCode());
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.cancel(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.CANCEL.getCode(), result.getOrderStatus());
     }
 
     @Test
     public void finish() throws Exception {
-        OrderDTO orderDTO  = orderService.findOne(ORDER_ID);
-        OrderDTO cancelResult  = orderService.finish(orderDTO);
-
-        Assert.assertEquals(cancelResult.getOrderStatus(), OrderStatusEnum.FINISHED.getCode());
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.finish(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.FINISHED.getCode(), result.getOrderStatus());
     }
 
     @Test
     public void paid() throws Exception {
-        OrderDTO orderDTO  = orderService.findOne(ORDER_ID);
-        OrderDTO cancelResult  = orderService.paid(orderDTO);
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.paid(orderDTO);
+        Assert.assertEquals(PayStatusEnum.SUCCESS.getCode(), result.getPayStatus());
+    }
 
-        Assert.assertEquals(cancelResult.getPayStatus(), PayStatusEnum.SUCCESS.getCode());
-
+    @Test
+    public void list() {
+        PageRequest request = new PageRequest(0,2);
+        Page<OrderDTO> orderDTOPage = orderService.findList(request);
+//        Assert.assertNotEquals(0, orderDTOPage.getTotalElements());
+        Assert.assertTrue("查询所有的订单列表", orderDTOPage.getTotalElements() > 0);
     }
 
 }

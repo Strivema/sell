@@ -4,8 +4,8 @@ import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- *
- * 这个包下面的类都是用来做表单验证的。。。。。
+ * Created by 廖师兄
+ * 2017-06-18 23:31
  */
 @Data
 public class OrderForm {
@@ -39,7 +39,4 @@ public class OrderForm {
      */
     @NotEmpty(message = "购物车不能为空")
     private String items;
-
-
-
 }

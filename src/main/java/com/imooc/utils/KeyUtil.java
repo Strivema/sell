@@ -3,21 +3,20 @@ package com.imooc.utils;
 import java.util.Random;
 
 /**
- * 生成主键 随机数
+ * Created by 廖师兄
+ * 2017-06-11 19:12
  */
 public class KeyUtil {
 
     /**
      * 生成唯一的主键
-     * 格式：时间+随机数
-     *
-     * 加synchronized是为了 生成订单id 不会重复
+     * 格式: 时间+随机数
      * @return
      */
-    public static synchronized String genUniqueKey(){
+    public static synchronized String genUniqueKey() {
         Random random = new Random();
-        Integer number = random.nextInt(9000000) + 1000000;   //生成一个六位随机数（永遠都是固定的六位）
+        Integer number = random.nextInt(900000) + 100000;
+
         return System.currentTimeMillis() + String.valueOf(number);
     }
-
 }

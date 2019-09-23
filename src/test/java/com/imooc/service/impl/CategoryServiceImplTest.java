@@ -11,40 +11,40 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
+/**
+ * Created by 廖师兄
+ * 2017-05-09 10:18
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CategoryServiceImplTest {
+
     @Autowired
     private CategoryServiceImpl categoryService;
 
     @Test
     public void findOne() throws Exception {
         ProductCategory productCategory = categoryService.findOne(1);
-        Assert.assertEquals(new Integer(1),productCategory.getCategoryId());
+        Assert.assertEquals(new Integer(1), productCategory.getCategoryId());
     }
 
     @Test
     public void findAll() throws Exception {
-        List<ProductCategory> result = categoryService.findAll();
-        Assert.assertNotEquals(0,result.size());
+        List<ProductCategory> productCategoryList = categoryService.findAll();
+        Assert.assertNotEquals(0, productCategoryList.size());
     }
 
     @Test
     public void findByCategoryTypeIn() throws Exception {
-        List<ProductCategory> result = categoryService.findByCategoryTypeIn(Arrays.asList(1,2,3));
-        Assert.assertEquals(2,result.size());
+        List<ProductCategory> productCategoryList = categoryService.findByCategoryTypeIn(Arrays.asList(1,2,3,4));
+        Assert.assertNotEquals(0, productCategoryList.size());
     }
 
-    /***
-     *  一个快捷键，shift+回车。。  直接跳到下一行。。
-     * @throws Exception
-     */
     @Test
     public void save() throws Exception {
-        ProductCategory productCategory = categoryService.save(new ProductCategory("男生最爱", 4));
-        Assert.assertNotNull(productCategory);
+        ProductCategory productCategory = new ProductCategory("男生专享", 10);
+        ProductCategory result = categoryService.save(productCategory);
+        Assert.assertNotNull(result);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.imooc.service.impl;
 
-
 import com.imooc.dto.OrderDTO;
 import com.imooc.enums.ResultEnum;
 import com.imooc.exception.SellException;
@@ -10,9 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Created by 廖师兄
+ * 2017-06-22 00:13
+ */
 @Service
 @Slf4j
-public class BuyerServiceImpl implements BuyerService{
+public class BuyerServiceImpl implements BuyerService {
+
     @Autowired
     private OrderService orderService;
 

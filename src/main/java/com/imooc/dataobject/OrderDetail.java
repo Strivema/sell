@@ -1,11 +1,16 @@
 package com.imooc.dataobject;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
+/**
+ * Created by 廖师兄
+ * 2017-06-11 17:20
+ */
 @Entity
 @Data
 public class OrderDetail {
@@ -23,7 +28,6 @@ public class OrderDetail {
     private String productName;
 
     /** 商品单价. */
-    /** 这个价格一定不能由前端传过来，而是从数据库中查出来。因为价格是我们自己定的  **/
     private BigDecimal productPrice;
 
     /** 商品数量. */
